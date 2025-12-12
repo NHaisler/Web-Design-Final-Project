@@ -1,51 +1,61 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// Same tag list for consistency
+const TAG_OPTIONS = [
+  "Abstract", "Adjective", "Adverb", "Business", "Communication", 
+  "Culture", "Daily Life", "Economics", "Education", "Feeling", 
+  "Food", "Health", "Nature", "Objects", "People", 
+  "Places", "Politics", "School", "Science", "Society", 
+  "Sports", "Technology", "Time", "Transport", "Travel", 
+  "Verb", "Work"
+];
+
 const Quiz = () => {
-  // Game States
   const [gameStarted, setGameStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showScore, setShowScore] = useState(false);
 
   // Settings State
   const [settings, setSettings] = useState({
-    count: 5,
-    level: 'All', // 'All', 'N5', 'N4'...
-    tag: ''
+    count: 10,       // Default increased to 10
+    level: 'All',
+    tag: 'All'       // Default to All
   });
 
-  // Quiz Data State
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // --- LOGIC: START QUIZ ---
   const startQuiz = async () => {
     setLoading(true);
     try {
-      // Build Query String: /api/quiz?count=5&level=N5&tag=food
+      // Build Query
       let url = `http://localhost:5000/api/quiz?count=${settings.count}`;
       if (settings.level !== 'All') url += `&level=${settings.level}`;
-      if (settings.tag) url += `&tag=${settings.tag}`;
+      if (settings.tag !== 'All') url += `&tag=${settings.tag}`;
 
       const res = await axios.get(url);
       const allVocab = res.data;
 
       if (allVocab.length < 4) {
-        alert("Not enough words found with these settings! Try 'All' levels.");
+        alert(`Not enough words found! Found ${allVocab.length}. Need at least 4. Try changing filters.`);
         setLoading(false);
         return;
       }
 
-      // Prepare Questions (Same logic as before)
+      // Logic to pick questions
       const selectedQuestions = allVocab.slice(0, settings.count);
       const quizData = selectedQuestions.map((q) => {
         const distractors = allVocab
           .filter(w => w._id !== q._id)
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
+        
+        // If we don't have enough distractors (rare if filtering is strict), fill with random words? 
+        // For MVP, we assume the user picks a filter with >4 words.
         
         const options = [...distractors, q].sort(() => 0.5 - Math.random());
         return { ...q, options };
@@ -63,7 +73,6 @@ const Quiz = () => {
     setLoading(false);
   };
 
-  // --- LOGIC: HANDLE ANSWER ---
   const handleAnswerClick = (option) => {
     if (isProcessing) return;
     setIsProcessing(true);
@@ -103,10 +112,8 @@ const Quiz = () => {
     return '#6c757d';
   };
 
-  // --- RENDER: LOADING ---
   if (loading) return <h2 style={{textAlign:'center', marginTop:'50px'}}>Loading Quiz...</h2>;
 
-  // --- RENDER: SCORE SCREEN ---
   if (showScore) {
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -119,7 +126,6 @@ const Quiz = () => {
     );
   }
 
-  // --- RENDER: SETTINGS SCREEN (Start Page) ---
   if (!gameStarted) {
     return (
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '30px', background: 'white', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
@@ -127,13 +133,16 @@ const Quiz = () => {
         
         <div style={{ marginBottom: '20px' }}>
           <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Number of Questions:</label>
-          <input 
-            type="number" 
+          <select 
             value={settings.count} 
             onChange={(e) => setSettings({...settings, count: parseInt(e.target.value)})}
             style={{ width:'100%', padding:'10px', boxSizing:'border-box'}}
-            min="1" max="50"
-          />
+          >
+            <option value="5">5 Questions</option>
+            <option value="10">10 Questions</option>
+            <option value="20">20 Questions</option>
+            <option value="50">50 Questions (Marathon)</option>
+          </select>
         </div>
 
         <div style={{ marginBottom: '20px' }}>
@@ -153,14 +162,17 @@ const Quiz = () => {
         </div>
 
         <div style={{ marginBottom: '30px' }}>
-          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Filter by Tag (Optional):</label>
-          <input 
-            type="text" 
-            placeholder="e.g. food"
+          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Category (Tag):</label>
+          <select 
             value={settings.tag} 
             onChange={(e) => setSettings({...settings, tag: e.target.value})}
             style={{ width:'100%', padding:'10px', boxSizing:'border-box'}}
-          />
+          >
+            <option value="All">All Categories</option>
+            {TAG_OPTIONS.map(tag => (
+              <option key={tag} value={tag}>{tag}</option>
+            ))}
+          </select>
         </div>
 
         <button 
@@ -173,7 +185,6 @@ const Quiz = () => {
     );
   }
 
-  // --- RENDER: GAME SCREEN ---
   const currentQ = questions[currentIndex];
   return (
     <div style={{ maxWidth: '600px', margin: '50px auto', textAlign: 'center' }}>

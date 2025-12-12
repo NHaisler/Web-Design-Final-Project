@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Stats from './pages/Stats';
-import Add from './pages/Add';  // <-- NEW LINE 1: Import the page
+import Manage from './pages/Manage'; // Renamed from Add
 
 import './App.css';
 
@@ -17,8 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
-            <Route path="/add" element={<Add />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/manage" element={<Manage />} />
           </Routes>
         </div>
       </div>
