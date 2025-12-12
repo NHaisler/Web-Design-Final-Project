@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config'; // <--- NEW IMPORT
 
-// Same tag list for consistency
 const TAG_OPTIONS = [
   "Abstract", "Adjective", "Adverb", "Business", "Communication", 
   "Culture", "Daily Life", "Economics", "Education", "Feeling", 
@@ -18,9 +18,9 @@ const Quiz = () => {
 
   // Settings State
   const [settings, setSettings] = useState({
-    count: 10,       // Default increased to 10
+    count: 10,
     level: 'All',
-    tag: 'All'       // Default to All
+    tag: 'All'
   });
 
   const [questions, setQuestions] = useState([]);
@@ -32,8 +32,8 @@ const Quiz = () => {
   const startQuiz = async () => {
     setLoading(true);
     try {
-      // Build Query
-      let url = `http://localhost:5000/api/quiz?count=${settings.count}`;
+      // Build Query using API_BASE_URL
+      let url = `${API_BASE_URL}/api/quiz?count=${settings.count}`;
       if (settings.level !== 'All') url += `&level=${settings.level}`;
       if (settings.tag !== 'All') url += `&tag=${settings.tag}`;
 
@@ -46,16 +46,12 @@ const Quiz = () => {
         return;
       }
 
-      // Logic to pick questions
       const selectedQuestions = allVocab.slice(0, settings.count);
       const quizData = selectedQuestions.map((q) => {
         const distractors = allVocab
           .filter(w => w._id !== q._id)
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
-        
-        // If we don't have enough distractors (rare if filtering is strict), fill with random words? 
-        // For MVP, we assume the user picks a filter with >4 words.
         
         const options = [...distractors, q].sort(() => 0.5 - Math.random());
         return { ...q, options };
@@ -98,7 +94,8 @@ const Quiz = () => {
 
   const saveScore = async (finalScore) => {
     try {
-      await axios.post('http://localhost:5000/api/results', {
+      // Use API_BASE_URL
+      await axios.post(`${API_BASE_URL}/api/results`, {
         score: finalScore,
         total: questions.length
       });

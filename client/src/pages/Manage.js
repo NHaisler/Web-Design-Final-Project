@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config'; // <--- NEW IMPORT
 
-// The common tags from your dataset
 const TAG_OPTIONS = [
   "Abstract", "Adjective", "Adverb", "Business", "Communication", 
   "Culture", "Daily Life", "Economics", "Education", "Feeling", 
@@ -12,15 +12,10 @@ const TAG_OPTIONS = [
 ];
 
 const Manage = () => {
-  // Form State
   const [formData, setFormData] = useState({
     kanji: '', hiragana: '', english: '', level: 'N5', tags: ''
   });
-
-  // Data State
   const [vocabList, setVocabList] = useState([]);
-  
-  // Filter State
   const [filterText, setFilterText] = useState('');
   const [filterLevel, setFilterLevel] = useState('All');
   const [filterTag, setFilterTag] = useState('All');
@@ -31,18 +26,19 @@ const Manage = () => {
 
   const fetchVocab = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/vocab');
-      setVocabList(res.data.reverse()); // Newest first
+      // Use API_BASE_URL
+      const res = await axios.get(`${API_BASE_URL}/api/vocab`);
+      setVocabList(res.data.reverse());
     } catch (err) { console.error(err); }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Allow user to select a tag from a dropdown, OR type one manually if they want
     const tagArray = formData.tags.split(',').map(t => t.trim()).filter(t => t);
     
     try {
-      await axios.post('http://localhost:5000/api/vocab', {
+      // Use API_BASE_URL
+      await axios.post(`${API_BASE_URL}/api/vocab`, {
         ...formData,
         tags: tagArray
       });
@@ -55,12 +51,12 @@ const Manage = () => {
   const handleDelete = async (id) => {
     if(!window.confirm("Delete this word?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/vocab/${id}`);
+      // Use API_BASE_URL
+      await axios.delete(`${API_BASE_URL}/api/vocab/${id}`);
       fetchVocab();
     } catch (err) { console.error(err); }
   };
 
-  // --- FILTER LOGIC ---
   const filteredList = vocabList.filter(word => {
     const matchesText = (word.english.toLowerCase().includes(filterText.toLowerCase()) || 
                          word.kanji.includes(filterText));
@@ -94,7 +90,6 @@ const Manage = () => {
               <option value="N1">N1 (Hard)</option>
             </select>
             
-            {/* Simple text input for tags for now, or you could make this a multi-select */}
             <input 
               placeholder="Tags (e.g. Food, Verb)" 
               value={formData.tags} 
@@ -114,7 +109,6 @@ const Manage = () => {
         <h2 style={{margin:0}}>Manage Vocabulary ({filteredList.length})</h2>
       </div>
 
-      {/* FILTER BAR */}
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '10px', marginBottom: '20px' }}>
         <input 
           placeholder="🔍 Search English or Kanji..." 
@@ -140,7 +134,6 @@ const Manage = () => {
         </select>
       </div>
 
-      {/* LIST */}
       <div style={{ maxHeight: '500px', overflowY: 'auto', border: '1px solid #ddd', borderRadius:'5px', backgroundColor: 'white' }}>
         {filteredList.map(word => (
           <div key={word._id} style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #eee' }}>

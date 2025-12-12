@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import API_BASE_URL from '../config'; // <--- NEW IMPORT
 
 const Stats = () => {
   const [results, setResults] = useState([]);
@@ -11,7 +12,8 @@ const Stats = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/results');
+      // Use API_BASE_URL
+      const res = await axios.get(`${API_BASE_URL}/api/results`);
       // Format date for the chart
       const formattedData = res.data.map((item, index) => ({
         name: `Quiz ${index + 1}`,

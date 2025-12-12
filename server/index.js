@@ -7,7 +7,13 @@ const apiRoutes = require('./routes/api');
 const app = express();
 
 // Middleware
-app.use(cors()); // Allows frontend to talk to backend
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    "https://web-design-final-project.onrender.com"
+  ],
+  credentials: true
+})); 
 app.use(express.json()); // Allows us to parse JSON bodies
 
 // Routes
