@@ -35,18 +35,6 @@ The "Stats" page includes a responsive bar chart (using the **Recharts** library
 
 ---
 
-## 📸 Screenshots
-
-*(Note: Replace these placeholders with links to your actual screenshots)*
-
-![Quiz Page](https://via.placeholder.com/800x400?text=Quiz+Setup+and+Interface)
-*The main quiz setup screen.*
-
-![Stats Page](https://via.placeholder.com/800x400?text=Stats+Page+Visualization)
-*A look at the score visualization chart.*
-
----
-
 ## 🏗️ Project Architecture
 
 The project utilizes the MERN stack (MongoDB, Express, React, Node) and is split into two primary directories:
