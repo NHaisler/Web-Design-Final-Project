@@ -37,4 +37,4 @@ The "Stats" page includes a responsive bar chart (using the **Recharts** library
 
 ## 🏗️ Project Architecture
 
-The project utilizes the MERN stack (MongoDB, Express, React, Node) and is split into two primary directories:
+The project utilizes numerous tools(MongoDB, Express, React, Node) and is split into two primary directories client and server.
