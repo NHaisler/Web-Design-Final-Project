@@ -16,7 +16,7 @@ The Japanese Quiz Site is designed to help users test their knowledge of Japanes
 
 | Type                         | Link                                                           |
 | ---------------------------- | -------------------------------------------------------------- |
-| **Frontend (Deployed Site)** | [https://fastidious-creponne-2dca81.netlify.app](https://fastidious-creponne-2dca81.netlify.app) |
+| **Frontend (Deployed Site)** | [https://fastidious-creponne-2dca81.netlify.app](https://japanesequizsite.netlify.app/) |
 | **Backend (API Base URL)** | [https://web-design-final-project.onrender.com](https://web-design-final-project.onrender.com)   |
 
 ---
