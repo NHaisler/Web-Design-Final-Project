@@ -61,18 +61,88 @@ Describe which advanced feature you implemented and **1–2 sentences** about ho
 ## 📸 Screenshots
 
 ![alt text](Home.png)
-
+![alt text](Quiz.png)
 ---
 
 ## 🏗️ Project Architecture
 
-```
+WebDesignFinalProject/
+├── client/
+│   ├── node_modules/
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public/
+│   │   └── index.html
+│   └── src/
+│       ├── App.css
+│       ├── App.js
+│       ├── components/
+│       │   └── Navbar.js
+│       ├── config.js
+│       ├── index.css
+│       ├── index.js
+│       ├── pages/
+│       │   ├── Add.js
+│       │   ├── Home.js
+│       │   ├── Manage.js
+│       │   ├── Quiz.js
+│       │   └── Stats.js
+│       └── reportWebVitals.js
+├── Home.png
+├── Quiz.png
+├── README.md
+└── server/
+    ├── index.js
+    ├── models/
+    │   ├── QuizResult.js
+    │   └── Vocab.js
+    ├── node_modules/
+    ├── package.json
+    ├── package-lock.json
+    ├── routes/
+    │   └── api.js
+    └── seed.js
 
-```
+Got it. You need the basic file structure combined with that explanatory sentence.
 
-Include a sentence explaining the flow:
+Here is the most basic file structure view, followed by the description you requested:
 
-> The React frontend communicates with the Express backend through API routes. The backend interacts with MongoDB using Mongoose models, and environment variables are used to store secrets.
+Plaintext
+
+WebDesignFinalProject/
+├── client/
+│   ├── node_modules/
+│   ├── package.json
+│   ├── public/
+│   │   └── index.html
+│   └── src/
+│       ├── App.js
+│       ├── components/
+│       │   └── Navbar.js
+│       ├── config.js
+│       ├── index.js
+│       └── pages/
+│           ├── Add.js
+│           ├── Home.js
+│           ├── Manage.js
+│           ├── Quiz.js
+│           └── Stats.js
+├── Home.png
+├── Quiz.png
+├── README.md
+└── server/
+    ├── index.js
+    ├── models/
+    │   ├── QuizResult.js
+    │   └── Vocab.js
+    ├── package.json
+    ├── routes/
+    │   └── api.js
+    └── seed.js
+
+
+**Flow Explanation**
+The React frontend communicates with the Express backend through API routes. The backend interacts with MongoDB using Mongoose models, and environment variables are used to store secrets.
 
 ---
 
