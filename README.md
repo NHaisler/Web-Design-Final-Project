@@ -67,7 +67,7 @@ Describe which advanced feature you implemented and **1–2 sentences** about ho
 ## 🏗️ Project Architecture
 
 
-''''
+```
 WebDesignFinalProject/
 ├── client/
 │   ├── node_modules/
@@ -104,7 +104,7 @@ WebDesignFinalProject/
     ├── routes/
     │   └── api.js
     └── seed.js
-''''
+```
 
 **Flow Explanation**
 The React frontend communicates with the Express backend through API routes. The backend interacts with MongoDB using Mongoose models, and environment variables are used to store secrets.
