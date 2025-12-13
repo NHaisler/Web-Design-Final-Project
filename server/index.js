@@ -9,7 +9,8 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    "https://web-design-final-project.onrender.com"
+    "https://web-design-final-project.onrender.com",
+    "https://japanesequizsite.netlify.app"
   ],
   credentials: true
 })); 
