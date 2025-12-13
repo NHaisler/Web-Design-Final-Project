@@ -60,8 +60,7 @@ Describe which advanced feature you implemented and **1–2 sentences** about ho
 
 ## 📸 Screenshots
 
-> Include 2–4 screenshots of your app.
-> Use relative paths (e.g., `/screenshots/home.png`) or full URLs.
+![alt text](Home.png)
 
 ---
 
