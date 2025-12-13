@@ -73,4 +73,14 @@ router.delete('/vocab/:id', async (req, res) => {
   }
 });
 
+router.get('/tags', async (req, res) => {
+    try {
+        const uniqueTags = await Vocab.distinct('tags'); 
+        res.json(uniqueTags.sort());
+    } catch (error) {
+        console.error('Error fetching unique tags:', error);
+        res.status(500).json({ message: "Error fetching tags" });
+    }
+});
+
 module.exports = router;

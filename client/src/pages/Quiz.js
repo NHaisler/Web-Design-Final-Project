@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 
@@ -27,6 +27,21 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const [availableTags, setAvailableTags] = useState([]);
+
+    useEffect(() => {
+      const fetchTags = async () => {
+        try {
+          const res = await axios.get(`${API_BASE_URL}/api/tags`);
+          setAvailableTags(res.data);
+        } catch (err) {
+          console.error("Error fetching tags:", err);
+        }
+      };
+      fetchTags();
+}, []);
+
 
   const startQuiz = async () => {
     setLoading(true);
@@ -129,17 +144,17 @@ if (showScore) {
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '30px', background: 'white', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
         <h1 style={{textAlign:'center'}}>Quiz Setup</h1>
         
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Number of Questions:</label>
+        <div style={{ marginBottom: '30px' }}>
+          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Category (Tag):</label>
           <select 
-            value={settings.count} 
-            onChange={(e) => setSettings({...settings, count: parseInt(e.target.value)})}
+            value={settings.tag} 
+            onChange={(e) => setSettings({...settings, tag: e.target.value})}
             style={{ width:'100%', padding:'10px', boxSizing:'border-box'}}
           >
-            <option value="5">5 Questions</option>
-            <option value="10">10 Questions</option>
-            <option value="20">20 Questions</option>
-            <option value="50">50 Questions</option>
+            <option value="All">All Categories</option>
+            {availableTags.map(tag => (
+              <option key={tag} value={tag}>{tag}</option>
+            ))}
           </select>
         </div>
 
