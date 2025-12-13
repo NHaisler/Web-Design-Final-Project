@@ -27,12 +27,6 @@ The Japanese Quiz Site is designed to help users test their knowledge of Japanes
 
 ---
 
-## 📸 Screenshots
-
-![alt text](Home.png)
-![alt text](Quiz.png)
----
-
 ## 🏗️ Project Architecture
 
 
@@ -153,8 +147,6 @@ Document where/how you deployed:
 ---
 
 # 🧠 Reflection
-
-*(This section is required for grading.)*
 
 ### **1. What was the hardest part of this project?**
 
