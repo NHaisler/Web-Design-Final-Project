@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import API_BASE_URL from '../config'; // <--- NEW IMPORT
+import API_BASE_URL from '../config';
 
 const TAG_OPTIONS = [
   "Abstract", "Adjective", "Adverb", "Business", "Communication", 
@@ -16,7 +16,6 @@ const Quiz = () => {
   const [loading, setLoading] = useState(false);
   const [showScore, setShowScore] = useState(false);
 
-  // Settings State
   const [settings, setSettings] = useState({
     count: 10,
     level: 'All',
@@ -32,7 +31,6 @@ const Quiz = () => {
   const startQuiz = async () => {
     setLoading(true);
     try {
-      // Build Query using API_BASE_URL
       let url = `${API_BASE_URL}/api/quiz?count=${settings.count}`;
       if (settings.level !== 'All') url += `&level=${settings.level}`;
       if (settings.tag !== 'All') url += `&tag=${settings.tag}`;
@@ -94,7 +92,6 @@ const Quiz = () => {
 
   const saveScore = async (finalScore) => {
     try {
-      // Use API_BASE_URL
       await axios.post(`${API_BASE_URL}/api/results`, {
         score: finalScore,
         total: questions.length
@@ -114,7 +111,7 @@ const Quiz = () => {
   if (showScore) {
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <h1>🎉 Quiz Complete!</h1>
+        <h1>Quiz Complete!</h1>
         <h2>Score: {score} / {questions.length}</h2>
         <button onClick={() => setGameStarted(false)} style={{ padding: '10px 20px', fontSize: '1.2rem', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
           New Quiz
@@ -126,7 +123,7 @@ const Quiz = () => {
   if (!gameStarted) {
     return (
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '30px', background: 'white', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-        <h1 style={{textAlign:'center'}}>📝 Quiz Setup</h1>
+        <h1 style={{textAlign:'center'}}>Quiz Setup</h1>
         
         <div style={{ marginBottom: '20px' }}>
           <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Number of Questions:</label>
@@ -138,7 +135,7 @@ const Quiz = () => {
             <option value="5">5 Questions</option>
             <option value="10">10 Questions</option>
             <option value="20">20 Questions</option>
-            <option value="50">50 Questions (Marathon)</option>
+            <option value="50">50 Questions</option>
           </select>
         </div>
 

@@ -18,13 +18,12 @@ const sampleData = [
 mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log('Connected to DB...');
-    // Clear existing data
+
     await Vocab.deleteMany({});
     console.log('Cleared old vocab.');
     
-    // Insert new data
     await Vocab.insertMany(sampleData);
-    console.log('✅ Added sample vocab!');
+    console.log('Added sample vocab!');
     
     mongoose.connection.close();
   })

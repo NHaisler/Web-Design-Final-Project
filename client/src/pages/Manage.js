@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import API_BASE_URL from '../config'; // <--- NEW IMPORT
+import API_BASE_URL from '../config';
 
 const TAG_OPTIONS = [
   "Abstract", "Adjective", "Adverb", "Business", "Communication", 
@@ -26,7 +26,6 @@ const Manage = () => {
 
   const fetchVocab = async () => {
     try {
-      // Use API_BASE_URL
       const res = await axios.get(`${API_BASE_URL}/api/vocab`);
       setVocabList(res.data.reverse());
     } catch (err) { console.error(err); }
@@ -37,7 +36,6 @@ const Manage = () => {
     const tagArray = formData.tags.split(',').map(t => t.trim()).filter(t => t);
     
     try {
-      // Use API_BASE_URL
       await axios.post(`${API_BASE_URL}/api/vocab`, {
         ...formData,
         tags: tagArray
@@ -51,7 +49,6 @@ const Manage = () => {
   const handleDelete = async (id) => {
     if(!window.confirm("Delete this word?")) return;
     try {
-      // Use API_BASE_URL
       await axios.delete(`${API_BASE_URL}/api/vocab/${id}`);
       fetchVocab();
     } catch (err) { console.error(err); }
@@ -68,8 +65,6 @@ const Manage = () => {
 
   return (
     <div style={{ maxWidth: '800px', margin: '20px auto', padding: '20px' }}>
-      
-      {/* ADD NEW WORD SECTION */}
       <div style={{ backgroundColor: '#fff', padding: '25px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <h2 style={{ marginTop: 0 }}>Add New Word</h2>
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
@@ -103,15 +98,14 @@ const Manage = () => {
       </div>
 
       <hr style={{ margin: '40px 0', border: 'none', borderTop: '1px solid #ddd' }} />
-
-      {/* MANAGE / SEARCH SECTION */}
+      
       <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'15px'}}>
         <h2 style={{margin:0}}>Manage Vocabulary ({filteredList.length})</h2>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '10px', marginBottom: '20px' }}>
         <input 
-          placeholder="🔍 Search English or Kanji..." 
+          placeholder="Search English or Kanji..." 
           value={filterText} 
           onChange={e => setFilterText(e.target.value)} 
           style={{ padding: '10px' }} 

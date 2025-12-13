@@ -19,7 +19,6 @@ const Add = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Convert comma string "food, verb" -> Array ["food", "verb"]
     const tagArray = formData.tags.split(',').map(t => t.trim()).filter(t => t);
     
     try {
@@ -29,7 +28,7 @@ const Add = () => {
       });
       setFormData({ kanji: '', hiragana: '', english: '', level: 'N5', tags: '' });
       fetchVocab();
-      alert('✅ Word Added!');
+      alert('Word Added!');
     } catch (err) { alert('Error adding word'); }
   };
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -19,10 +18,10 @@ const Navbar = () => {
 
   return (
     <nav style={navStyle}>
-      <Link style={linkStyle} to="/">🏠 Home</Link>
-      <Link style={linkStyle} to="/quiz">📝 Quiz</Link>
-      <Link style={linkStyle} to="/stats">📊 Stats</Link>
-      <Link style={linkStyle} to="/manage">⚙️ Manage</Link>
+      <Link style={linkStyle} to="/">Home</Link>
+      <Link style={linkStyle} to="/quiz">Quiz</Link>
+      <Link style={linkStyle} to="/stats">Stats</Link>
+      <Link style={linkStyle} to="/manage">Manage</Link>
     </nav>
   );
 };

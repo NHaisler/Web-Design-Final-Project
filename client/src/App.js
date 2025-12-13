@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Stats from './pages/Stats';
-import Manage from './pages/Manage'; // Renamed from Add
+import Manage from './pages/Manage';
 
 import './App.css';
 
