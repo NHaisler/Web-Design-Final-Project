@@ -2,14 +2,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 
-const TAG_OPTIONS = [
-  "Abstract", "Adjective", "Adverb", "Business", "Communication", 
-  "Culture", "Daily Life", "Economics", "Education", "Feeling", 
-  "Food", "Health", "Nature", "Objects", "People", 
-  "Places", "Politics", "School", "Science", "Society", 
-  "Sports", "Technology", "Time", "Transport", "Travel", 
-  "Verb", "Work"
-];
+// The static TAG_OPTIONS array has been removed.
 
 const Quiz = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -40,7 +33,7 @@ const Quiz = () => {
         }
       };
       fetchTags();
-}, []);
+  }, []);
 
 
   const startQuiz = async () => {
@@ -126,7 +119,7 @@ const Quiz = () => {
 
   if (loading) return <h2 style={{textAlign:'center', marginTop:'50px'}}>Loading Quiz...</h2>;
 
-if (showScore) {
+  if (showScore) {
     const percentage = Math.round((score / questions.length) * 100);
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -144,20 +137,22 @@ if (showScore) {
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '30px', background: 'white', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
         <h1 style={{textAlign:'center'}}>Quiz Setup</h1>
         
-        <div style={{ marginBottom: '30px' }}>
-          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Category (Tag):</label>
+        {/* 1. Number of Questions */}
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Number of Questions:</label>
           <select 
-            value={settings.tag} 
-            onChange={(e) => setSettings({...settings, tag: e.target.value})}
+            value={settings.count} 
+            onChange={(e) => setSettings({...settings, count: parseInt(e.target.value)})}
             style={{ width:'100%', padding:'10px', boxSizing:'border-box'}}
           >
-            <option value="All">All Categories</option>
-            {availableTags.map(tag => (
-              <option key={tag} value={tag}>{tag}</option>
-            ))}
+            <option value="5">5 Questions</option>
+            <option value="10">10 Questions</option>
+            <option value="20">20 Questions</option>
+            <option value="50">50 Questions</option>
           </select>
         </div>
 
+        {/* 2. Difficulty Level */}
         <div style={{ marginBottom: '20px' }}>
           <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Difficulty Level:</label>
           <select 
@@ -174,6 +169,7 @@ if (showScore) {
           </select>
         </div>
 
+        {/* 3. Category (Tag) - NOW USES DYNAMIC availableTags */}
         <div style={{ marginBottom: '30px' }}>
           <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>Category (Tag):</label>
           <select 
@@ -182,7 +178,7 @@ if (showScore) {
             style={{ width:'100%', padding:'10px', boxSizing:'border-box'}}
           >
             <option value="All">All Categories</option>
-            {TAG_OPTIONS.map(tag => (
+            {availableTags.map(tag => (
               <option key={tag} value={tag}>{tag}</option>
             ))}
           </select>

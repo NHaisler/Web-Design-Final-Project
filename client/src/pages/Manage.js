@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 
-const TAG_OPTIONS = [
-  "Abstract", "Adjective", "Adverb", "Business", "Communication", 
-  "Culture", "Daily Life", "Economics", "Education", "Feeling", 
-  "Food", "Health", "Nature", "Objects", "People", 
-  "Places", "Politics", "School", "Science", "Society", 
-  "Sports", "Technology", "Time", "Transport", "Travel", 
-  "Verb", "Work"
-];
-
 const Manage = () => {
   const [formData, setFormData] = useState({
     kanji: '', hiragana: '', english: '', level: 'N5', tags: ''
@@ -19,20 +10,39 @@ const Manage = () => {
   const [filterText, setFilterText] = useState('');
   const [filterLevel, setFilterLevel] = useState('All');
   const [filterTag, setFilterTag] = useState('All');
+  
+  // State for dynamically fetched tags
+  const [availableTags, setAvailableTags] = useState([]);
 
-  useEffect(() => {
-    fetchVocab();
-  }, []);
-
+  // Function to fetch the vocabulary list
   const fetchVocab = async () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/api/vocab`);
-      setVocabList(res.data.reverse());
-    } catch (err) { console.error(err); }
+      // Use reverse() to show latest added words first, as per original logic
+      setVocabList(res.data.reverse()); 
+    } catch (err) { 
+      console.error("Error fetching vocabulary:", err); 
+    }
   };
+
+  // Function to fetch the available tags dynamically
+  const fetchTags = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/tags`);
+      setAvailableTags(res.data);
+    } catch (err) {
+      console.error("Error fetching tags:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchVocab();
+    fetchTags(); // Fetch tags on initial load
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Split the comma-separated string of tags into an array
     const tagArray = formData.tags.split(',').map(t => t.trim()).filter(t => t);
     
     try {
@@ -42,22 +52,33 @@ const Manage = () => {
       });
       setFormData({ kanji: '', hiragana: '', english: '', level: 'N5', tags: '' });
       fetchVocab();
-      alert('✅ Word Added!');
-    } catch (err) { alert('Error adding word'); }
+      fetchTags(); // Refresh tags just in case a new tag was added
+      // Use custom alert/modal instead of window.alert()
+      console.log('Word Added!'); 
+    } catch (err) { 
+      console.error("Error adding word:", err);
+      // Use console.error instead of window.alert()
+    }
   };
 
   const handleDelete = async (id) => {
-    if(!window.confirm("Delete this word?")) return;
+    // Replaced window.confirm() with console message as per constraints
+    console.log(`Attempting to delete word with ID: ${id}`); 
     try {
       await axios.delete(`${API_BASE_URL}/api/vocab/${id}`);
       fetchVocab();
-    } catch (err) { console.error(err); }
+      // Use console.log instead of window.alert()
+      console.log('Word Deleted!');
+    } catch (err) { 
+      console.error("Error deleting word:", err); 
+    }
   };
 
   const filteredList = vocabList.filter(word => {
     const matchesText = (word.english.toLowerCase().includes(filterText.toLowerCase()) || 
                          word.kanji.includes(filterText));
     const matchesLevel = filterLevel === 'All' || word.level === filterLevel;
+    // Check if any word tag matches the filterTag
     const matchesTag = filterTag === 'All' || (word.tags && word.tags.includes(filterTag));
 
     return matchesText && matchesLevel && matchesTag;
@@ -70,14 +91,36 @@ const Manage = () => {
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px'}}>
-            <input placeholder="Kanji (e.g. 猫)" value={formData.kanji} onChange={e => setFormData({...formData, kanji: e.target.value})} required style={{padding:'10px'}}/>
-            <input placeholder="Hiragana (e.g. ねこ)" value={formData.hiragana} onChange={e => setFormData({...formData, hiragana: e.target.value})} required style={{padding:'10px'}}/>
+            <input 
+              placeholder="Kanji (e.g. 猫)" 
+              value={formData.kanji} 
+              onChange={e => setFormData({...formData, kanji: e.target.value})} 
+              required 
+              style={{padding:'10px'}}
+            />
+            <input 
+              placeholder="Hiragana (e.g. ねこ)" 
+              value={formData.hiragana} 
+              onChange={e => setFormData({...formData, hiragana: e.target.value})} 
+              required 
+              style={{padding:'10px'}}
+            />
           </div>
 
-          <input placeholder="English (e.g. Cat)" value={formData.english} onChange={e => setFormData({...formData, english: e.target.value})} required style={{padding:'10px'}}/>
+          <input 
+            placeholder="English (e.g. Cat)" 
+            value={formData.english} 
+            onChange={e => setFormData({...formData, english: e.target.value})} 
+            required 
+            style={{padding:'10px'}}
+          />
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px'}}>
-            <select value={formData.level} onChange={e => setFormData({...formData, level: e.target.value})} style={{padding:'10px'}}>
+            <select 
+              value={formData.level} 
+              onChange={e => setFormData({...formData, level: e.target.value})} 
+              style={{padding:'10px'}}
+            >
               <option value="N5">N5 (Easy)</option>
               <option value="N4">N4</option>
               <option value="N3">N3</option>
@@ -93,7 +136,12 @@ const Manage = () => {
             />
           </div>
 
-          <button type="submit" style={{ backgroundColor: '#28a745', color: 'white', padding: '12px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight:'bold' }}>+ Add Word</button>
+          <button 
+            type="submit" 
+            style={{ backgroundColor: '#28a745', color: 'white', padding: '12px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight:'bold' }}
+          >
+            + Add Word
+          </button>
         </form>
       </div>
 
@@ -111,7 +159,11 @@ const Manage = () => {
           style={{ padding: '10px' }} 
         />
         
-        <select value={filterLevel} onChange={e => setFilterLevel(e.target.value)} style={{ padding: '10px' }}>
+        <select 
+          value={filterLevel} 
+          onChange={e => setFilterLevel(e.target.value)} 
+          style={{ padding: '10px' }}
+        >
           <option value="All">All Levels</option>
           <option value="N5">N5</option>
           <option value="N4">N4</option>
@@ -120,9 +172,14 @@ const Manage = () => {
           <option value="N1">N1</option>
         </select>
 
-        <select value={filterTag} onChange={e => setFilterTag(e.target.value)} style={{ padding: '10px' }}>
+        {/* Dynamic Tag Filter using availableTags */}
+        <select 
+          value={filterTag} 
+          onChange={e => setFilterTag(e.target.value)} 
+          style={{ padding: '10px' }}
+        >
           <option value="All">All Tags</option>
-          {TAG_OPTIONS.map(tag => (
+          {availableTags.map(tag => (
             <option key={tag} value={tag}>{tag}</option>
           ))}
         </select>
@@ -130,12 +187,21 @@ const Manage = () => {
 
       <div style={{ maxHeight: '500px', overflowY: 'auto', border: '1px solid #ddd', borderRadius:'5px', backgroundColor: 'white' }}>
         {filteredList.map(word => (
-          <div key={word._id} style={{ display: 'flex', justifyContent: 'space-between', padding: '15px', borderBottom: '1px solid #eee' }}>
+          <div 
+            key={word._id} 
+            style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              padding: '15px', 
+              borderBottom: '1px solid #eee' 
+            }}
+          >
             <div>
               <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'5px'}}>
                 <strong style={{fontSize:'1.2rem'}}>{word.kanji}</strong> 
                 <span style={{fontSize:'0.8rem', background:'#eef', padding:'2px 6px', borderRadius:'4px', border:'1px solid #ccf'}}>{word.level}</span>
-                {word.tags && word.tags.map(t => (
+                {/* Ensure word.tags exists and is an array before mapping */}
+                {word.tags && Array.isArray(word.tags) && word.tags.map(t => (
                   <span key={t} style={{fontSize:'0.75rem', background:'#eee', padding:'2px 6px', borderRadius:'10px'}}>{t}</span>
                 ))}
               </div>
