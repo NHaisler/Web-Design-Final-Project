@@ -24,12 +24,7 @@ The Japanese Quiz Site is designed to help users test their knowledge of Japanes
 * Add your own words
 * Quizzes by Difficulty
 * View Stats of previous quizzes
-
-### **Advanced Feature**
-
-Describe which advanced feature you implemented and **1–2 sentences** about how it works:
-
-
+* 
 ---
 
 ## 📸 Screenshots
