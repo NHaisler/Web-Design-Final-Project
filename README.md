@@ -116,30 +116,24 @@ The React frontend communicates with the Express backend through API routes. The
 ### **1. Clone the project**
 
 ```bash
-git clone https://github.com/your-username/your-project.git
-cd your-project
+git clone [https://github.com/NHaisler/Web-Design-Final-Project.git](https://github.com/NHaisler/Web-Design-Final-Project.git)
+cd Web-Design-Final-Project
 ```
 
 ---
 
 ### **2. Environment Variables**
 
-Include a `.env.example` file in both repos.
+Include a `.env` file in both repos.
 
 **Backend `.env.example`:**
 
 ```
 MONGO_URI=your_mongodb_url
-PORT=4000
-JWT_SECRET=your_secret_if_using_auth
-API_KEY=if_using_external_apis
+PORT=5000
+NEXT_PUBLIC_API_URL=your_onrender_url
 ```
 
-**Frontend `.env.example`:**
-
-```
-VITE_API_URL=https://your-backend-url.com
-```
 
 ---
 
@@ -148,7 +142,7 @@ VITE_API_URL=https://your-backend-url.com
 #### Frontend:
 
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
@@ -156,7 +150,7 @@ npm run dev
 #### Backend:
 
 ```bash
-cd backend
+cd server
 npm install
 npm run dev
 ```
@@ -169,69 +163,24 @@ npm run dev
 2. Start frontend on `http://localhost:5173`
 3. Confirm CORS + API requests are working
 
----
-
-## 🛠 API Documentation
-
-Document the **main 3–5 routes**:
-
-### **GET /api/resource**
-
-Returns all resources.
-
-### **POST /api/resource**
-
-Creates a new resource.
-Body example:
-
-```json
-{
-  "name": "Example",
-  "description": "Text here"
-}
-```
-
-### **PATCH /api/resource/:id**
-
-Updates a resource.
-
-### **DELETE /api/resource/:id**
-
-Deletes a resource.
-
-> Add additional routes if needed (auth, file uploads, WebSockets, etc.).
-
----
-
 ## 🚀 Deployment Notes
 
 Document where/how you deployed:
 
 ### **Frontend**
 
-* Vercel / Netlify
-* Explain build command if different (`npm run build`)
+* Netlify
 
 ### **Backend**
 
-* Render / Railway
-* Note environment variable setup
-
+* Render
 
 ---
 
 ## 🎥 Video Walkthrough
 
 **Link to Loom/YouTube:**
-[https://your-video-link.com](https://your-video-link.com)
-
-Include quick timestamps if you want extra professionalism:
-
-* **0:00–0:30** Overview
-* **0:30–1:30** Core features demo
-* **1:30–2:30** Advanced feature
-* **2:30–3:00** Technical challenge solved
-
+[DEMO](https://youtu.be/P2CRqWs7TO8?si=imvGpBT5kvWD1x46)
 ---
 
 # 🧠 Reflection
@@ -240,31 +189,20 @@ Include quick timestamps if you want extra professionalism:
 
 ### **1. What was the hardest part of this project?**
 
-Write 3–5 sentences.
+Getting the deployment working. It is one thing to have things work locally, but to have them work while deployed in two different places, pushing fixes to GIthub. Fixing settings on both deployement sites, as well as connecting with a database. It can be a lot, and there were a ton of errors to fix for it to work.
 
 ### **2. What are you most proud of?**
 
-Could be a feature, a UI improvement, debugging work, or personal growth.
+Getting my first fully deployed up and running website. It is cool to have a link I can just go to and there it is. I have had plenty of temporary local things, but this one can be very easy to show others.
 
 ### **3. What would you do differently next time?**
 
-Think in terms of planning, scoping, or tech choices.
+Not much, maybe choose something with more difficult CSS. I can code fine, but I want to have some cooler or nicer looking stuff on my site, since it is all ok, but pretty basic.
 
 ### **4. How did you incorporate feedback from the 12/5 check-in gallery?**
 
-Be explicit (this is graded):
-
-> “Based on feedback, I reduced scope by removing X and focused on stabilizing Y.”
-> “I reorganized my components for readability after feedback about structure.”
-
----
+Based on feeback from a friend saying, "What if I don't know Japanese words to add?", I decided to provide a base of 500 words so anyone can use the site. Not needing to add any for themselves before they start.
 
 # Acknowledgments / AI Usage Disclosure
 
-> Include a brief note on tools used (per academic integrity guidelines):
-
-Examples:
-
-* “Used ChatGPT to help troubleshoot a CORS issue.”
-* “Used Claude for help writing documentation.”
-* “Used VSCode Copilot for autocomplete suggestions.”
+I used Gemini for a lot of things. Getting CSS and formatting nice. Debugging API issues, lots of CORS and deployment issues. It mainly acted as a tool to speed up tasks, and give me quick potential solutions to errors I encountered.
