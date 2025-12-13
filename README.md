@@ -43,20 +43,13 @@ The Japanese Quiz Site is designed to help users test their knowledge of Japanes
 | **Frontend (Deployed Site)** | https://japanesequizsite.netlify.app/ |
 | **Backend (API Base URL)**   | https://web-design-final-project.onrender.com   |
 
-> Test these in an incognito window before submission.
-
 ---
 
 ## ✨ Features
 
-List **3–6 key features**, ideally with short bullets:
-
-* Create, read, update, and delete **[core resource name]**
-* Responsive UI with reusable components
-* Backend API with full CRUD operations
-* Data persisted in MongoDB
-* Advanced feature: *describe yours clearly*
-* Error handling on client + server
+* Add your own words
+* Quizzes by Difficulty
+* View Stats of previous quizzes
 
 ### **Advanced Feature**
 
@@ -74,20 +67,8 @@ Describe which advanced feature you implemented and **1–2 sentences** about ho
 
 ## 🏗️ Project Architecture
 
-Describe how the pieces fit together.
-
 ```
-/frontend
-  /src
-    /components
-    /pages
-    App.jsx
-    main.jsx
 
-/backend
-  /models
-  /routes
-  server.js
 ```
 
 Include a sentence explaining the flow:
