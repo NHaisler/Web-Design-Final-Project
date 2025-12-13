@@ -24,7 +24,7 @@ The Japanese Quiz Site is designed to help users test their knowledge of Japanes
 * Add your own words
 * Quizzes by Difficulty
 * View Stats of previous quizzes
-* 
+
 ---
 
 ## 📸 Screenshots
