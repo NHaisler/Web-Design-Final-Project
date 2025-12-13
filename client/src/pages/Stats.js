@@ -15,7 +15,7 @@ const Stats = () => {
       const res = await axios.get(`${API_BASE_URL}/api/results`);
       const formattedData = res.data.map((item, index) => ({
         name: `Quiz ${index + 1}`,
-        score: item.score,
+        score: item.percentage, // <-- CHANGE: Use percentage field
         date: new Date(item.date).toLocaleDateString()
       }));
       setResults(formattedData);
@@ -35,8 +35,8 @@ const Stats = () => {
             <BarChart data={results} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
+              <YAxis domain={[0, 100]} label={{ value: 'Score (%)', angle: -90, position: 'insideLeft' }} />
+              <Tooltip formatter={(value) => [`${value}%`, 'Score']} />
               <Bar dataKey="score" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>

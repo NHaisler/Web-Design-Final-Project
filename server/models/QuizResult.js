@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const QuizResultSchema = new mongoose.Schema({
   score: Number,
   total: Number,
+  percentage: { type: Number, required: true },
   date: { type: Date, default: Date.now }
 });
 

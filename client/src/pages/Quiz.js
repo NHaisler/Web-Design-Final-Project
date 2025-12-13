@@ -91,10 +91,13 @@ const Quiz = () => {
   };
 
   const saveScore = async (finalScore) => {
+    const total = questions.length;
+    const percentage = Math.round((finalScore / total) * 100);
     try {
       await axios.post(`${API_BASE_URL}/api/results`, {
         score: finalScore,
-        total: questions.length
+        total: total,
+        percentage: percentage
       });
     } catch (err) { console.error(err); }
   };
@@ -108,13 +111,14 @@ const Quiz = () => {
 
   if (loading) return <h2 style={{textAlign:'center', marginTop:'50px'}}>Loading Quiz...</h2>;
 
-  if (showScore) {
+if (showScore) {
+    const percentage = Math.round((score / questions.length) * 100);
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
         <h1>Quiz Complete!</h1>
-        <h2>Score: {score} / {questions.length}</h2>
+        <h2>Score: {score} / {questions.length} ({percentage}%)</h2>
         <button onClick={() => setGameStarted(false)} style={{ padding: '10px 20px', fontSize: '1.2rem', background: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-          New Quiz
+        New Quiz
         </button>
       </div>
     );
